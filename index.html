@@ -1,54 +1,50 @@
 <html>
-<head><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-	<script async src="https://www.google.com/recaptcha/api.js"></script>
-<script>
-  // How this code snippet works:
-  // This logic overwrites the default behavior of `grecaptcha.ready()` to
-  // ensure that it can be safely called at any time. When `grecaptcha.ready()`
-  // is called before reCAPTCHA is loaded, the callback function that is passed
-  // by `grecaptcha.ready()` is enqueued for execution after reCAPTCHA is
-  // loaded.
-  if(typeof grecaptcha === 'undefined') {
-    grecaptcha = {};
-  }
-  grecaptcha.ready = function(cb){
-    if(typeof grecaptcha === 'undefined') {
-      // window.__grecaptcha_cfg is a global variable that stores reCAPTCHA's
-      // configuration. By default, any functions listed in its 'fns' property
-      // are automatically executed when reCAPTCHA loads.
-      const c = '___grecaptcha_cfg';
-      window[c] = window[c] || {};
-      (window[c]['fns'] = window[c]['fns']||[]).push(cb);
-    } else {
-      cb();
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <script async src="https://www.google.com/recaptcha/api.js"></script>
+  <script>
+    // Ensure grecaptcha is safely initialized
+    if (typeof grecaptcha === 'undefined') {
+      grecaptcha = {};
     }
-  }
+    grecaptcha.ready = function(cb){
+      if (typeof grecaptcha === 'undefined') {
+        const c = '___grecaptcha_cfg';
+        window[c] = window[c] || {};
+        (window[c]['fns'] = window[c]['fns'] || []).push(cb);
+      } else {
+        cb();
+      }
+    };
 
-  // Usage
-  grecaptcha.ready(function(){
-    grecaptcha.render("container", {
-      sitekey: "6LexxqYqAAAAAIv_6QMH9_6l5VHEwGRs3gfslWSN"
+    // Render reCAPTCHA widget
+    grecaptcha.ready(function() {
+      grecaptcha.render("container", {
+        sitekey: "6LexxqYqAAAAAIv_6QMH9_6l5VHEwGRs3gfslWSN"
+      });
     });
-  });
-</script>
+  </script>
 </head>
-<body><script type='text/javascript'>
-	function initEmbeddedMessaging() {
-		try {
-			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
-
-			embeddedservice_bootstrap.init(
-				'00DDx0000002Dd2',
-				'Messaging_In_App_and_Web',
-				'https://grassopcobviltd--livechatde.sandbox.my.site.com/ESWMessagingInAppandW1735238381554',
-				{
-					scrt2URL: 'https://grassopcobviltd--livechatde.sandbox.my.salesforce-scrt.com'
-				}
-			);
-		} catch (err) {
-			console.error('Error loading Embedded Messaging: ', err);
-		}
-	};
-</script>
-<script type='text/javascript' src='https://grassopcobviltd--livechatde.sandbox.my.site.com/ESWMessagingInAppandW1735238381554/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
-</body></html>
+<body>
+  <div id="container"></div>
+  <script type="text/javascript">
+    // Initialize Embedded Messaging
+    function initEmbeddedMessaging() {
+      try {
+        embeddedservice_bootstrap.settings.language = 'en_US'; // Language setting
+        embeddedservice_bootstrap.init(
+          '00DDx0000002Dd2', // Salesforce org ID
+          'Messaging_In_App_and_Web', // Messaging channel
+          'https://grassopcobviltd--livechatde.sandbox.my.site.com/ESWMessagingInAppandW1735238381554', // Chat URL
+          {
+            scrt2URL: 'https://grassopcobviltd--livechatde.sandbox.my.salesforce-scrt.com' // Secure chat URL
+          }
+        );
+      } catch (err) {
+        console.error('Error loading Embedded Messaging: ', err);
+      }
+    };
+  </script>
+  <script type="text/javascript" src="https://grassopcobviltd--livechatde.sandbox.my.site.com/ESWMessagingInAppandW1735238381554/assets/js/bootstrap.min.js" onload="initEmbeddedMessaging()"></script>
+</body>
+</html>
