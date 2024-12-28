@@ -3,34 +3,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
   <script async src="https://www.google.com/recaptcha/api.js"></script>
   <script>
-    // Ensure grecaptcha is safely initialized
-    if (typeof grecaptcha === 'undefined') {
-      grecaptcha = {};
-    }
-    grecaptcha.ready = function(cb){
-      if (typeof grecaptcha === 'undefined') {
-        const c = '___grecaptcha_cfg';
-        window[c] = window[c] || {};
-        (window[c]['fns'] = window[c]['fns'] || []).push(cb);
+    // Wait for reCAPTCHA library to load and safely render the widget
+    function initializeRecaptcha() {
+      if (typeof grecaptcha !== 'undefined') {
+        grecaptcha.ready(function () {
+          grecaptcha.render("container", {
+            sitekey: "6LexxqYqAAAAAIv_6QMH9_6l5VHEwGRs3gfslWSN"
+          });
+        });
       } else {
-        cb();
+        console.error("reCAPTCHA failed to load.");
       }
-    };
-
-    // Render reCAPTCHA widget
-    grecaptcha.ready(function() {
-      grecaptcha.render("container", {
-        sitekey: "6LexxqYqAAAAAIv_6QMH9_6l5VHEwGRs3gfslWSN"
-      });
-    });
+    }
   </script>
 </head>
-<body>
+<body onload="initializeRecaptcha()">
   <div id="container"></div>
+  
   <script type="text/javascript">
     // Initialize Embedded Messaging
     function initEmbeddedMessaging() {
       try {
+        // Check for CSP compliance in Embedded Messaging initialization
         embeddedservice_bootstrap.settings.language = 'en_US'; // Language setting
         embeddedservice_bootstrap.init(
           '00DDx0000002Dd2', // Salesforce org ID
@@ -43,8 +37,10 @@
       } catch (err) {
         console.error('Error loading Embedded Messaging: ', err);
       }
-    };
+    }
   </script>
-  <script type="text/javascript" src="https://grassopcobviltd--livechatde.sandbox.my.site.com/ESWMessagingInAppandW1735238381554/assets/js/bootstrap.min.js" onload="initEmbeddedMessaging()"></script>
+  <script type="text/javascript" 
+          src="https://grassopcobviltd--livechatde.sandbox.my.site.com/ESWMessagingInAppandW1735238381554/assets/js/bootstrap.min.js" 
+          onload="initEmbeddedMessaging()"></script>
 </body>
 </html>
