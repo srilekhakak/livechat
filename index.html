@@ -1,30 +1,30 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <script async src="https://www.google.com/recaptcha/api.js"></script>
+  <script async defer src="https://www.google.com/recaptcha/api.js"></script>
   <script>
-    // Wait for reCAPTCHA library to load and safely render the widget
+    // Initialize reCAPTCHA after the script loads
     function initializeRecaptcha() {
       if (typeof grecaptcha !== 'undefined') {
         grecaptcha.ready(function () {
-          grecaptcha.render("container", {
-            sitekey: "6LexxqYqAAAAAIv_6QMH9_6l5VHEwGRs3gfslWSN"
+          grecaptcha.render('container', {
+            sitekey: '6LexxqYqAAAAAIv_6QMH9_6l5VHEwGRs3gfslWSN'
           });
         });
       } else {
-        console.error("reCAPTCHA failed to load.");
+        console.error('reCAPTCHA library failed to load.');
       }
     }
-  </script>
-</head>
-<body onload="initializeRecaptcha()">
-  <div id="container"></div>
-  
-  <script type="text/javascript">
+
+    // Add an event listener to detect CSP violations
+    window.addEventListener('securitypolicyviolation', (e) => {
+      console.error('CSP Violation:', e);
+    });
+
     // Initialize Embedded Messaging
     function initEmbeddedMessaging() {
       try {
-        // Check for CSP compliance in Embedded Messaging initialization
         embeddedservice_bootstrap.settings.language = 'en_US'; // Language setting
         embeddedservice_bootstrap.init(
           '00DDx0000002Dd2', // Salesforce org ID
@@ -39,6 +39,9 @@
       }
     }
   </script>
+</head>
+<body onload="initializeRecaptcha()">
+  <div id="container"></div>
   <script type="text/javascript" 
           src="https://grassopcobviltd--livechatde.sandbox.my.site.com/ESWMessagingInAppandW1735238381554/assets/js/bootstrap.min.js" 
           onload="initEmbeddedMessaging()"></script>
